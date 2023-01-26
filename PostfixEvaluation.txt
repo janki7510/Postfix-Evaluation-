@@ -1,0 +1,59 @@
+//postfix evaluation
+#include<stdio.h>
+#include<ctype.h>
+#include<conio.h>
+#define N 20
+int stack[N];
+int top=-1;
+void push(int);
+int pop();
+void main()
+{
+ char po[30];
+ int op1,op2,i;
+ clrscr();
+ printf("\nenter postfix expression:");
+ gets(po);
+
+ for(i=0;po[i]!='\0';i++)
+ {
+  if(isdigit(po[i]))
+  {
+   push(po[i]-'0');
+  }
+  else
+  {
+   op2=pop();
+   op1=pop();
+   switch(po[i])
+   {
+    case '+':push(op1+op2);
+    break;
+    case '-':push(op1-op2);
+    break;
+    case '*':push(op1*op2);
+    break;
+    case '/':push(op1/op2);
+    break;
+    case '%':push(op1%op2);
+    break;
+   }
+  }
+ }
+ printf("\nThe result is %d",stack[top]);
+ getch();
+}
+void push(int x)
+{
+ if(top==N-1)
+  printf("\nOverflow");
+ else
+  stack[++top]=x;
+}
+int pop()
+{
+ if(top==-1)
+  return -1;
+ else
+  return stack[top--];
+}
